@@ -66,9 +66,10 @@ public class PersonController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDefinition(@PathVariable("id") int id) {
+    public ResponseEntity<Void> deletePerson(@PathVariable("id") int id) {
         Optional<Person> optPerson = personService.getPerson(id);
         if(optPerson.isPresent()){
+            personService.deletePerson(id);
             return ResponseEntity.ok().<Void>build();
         }
         else{

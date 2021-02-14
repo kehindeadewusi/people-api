@@ -50,11 +50,12 @@ public class SimplePersonService implements PersonService {
     @Override
     public Optional<Person> updatePerson(int id, Person person) {
         Optional<Person> existing = personRepo.findById(id);
-        if (!existing.isPresent())
+        if (existing.isEmpty())
             return Optional.empty();
-        BeanUtils.copyProperties(person, existing, "id");
-        personRepo.save(person);
-        return Optional.of(person);
+        Person existingPerson = existing.get();
+        BeanUtils.copyProperties(person, existingPerson, "id");
+        personRepo.save(existingPerson);
+        return Optional.of(existingPerson);
     }
 
     @Override
