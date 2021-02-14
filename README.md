@@ -1,5 +1,7 @@
 # People API
-A simple CRUD API to demonstrate a bit of expertise :)
+A simple CRUD API.
+
+Note: This branch does not enable Spring Security, please switch to the feature/secure-it which supports client credentials flow.
 
 This code targets Java 11, but would also works on Java 8, you'd have to change the targets in pom.xml though. 
 ```
