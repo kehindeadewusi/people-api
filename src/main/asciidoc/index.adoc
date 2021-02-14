@@ -1,0 +1,87 @@
+= Person API
+Keni <kehinde.adewusi@gmail.com>
+:toc: left
+:toclevels: 4
+
+:sectnums:
+:hardbreaks:
+
+This {doctitle} documentation will come in handy for integrators and front-end developers. 
+The service  will be running at a URL such as http://localhost:8080/ and other URLs in the documentation will be relative to this root.
+
+TIP: The APIs have been arranged in a somewhat logical order from top to bottom.
+
+== CRUD Operations
+This outlines the CRUD operations available in the API.
+
+[#PersonCreate]
+=== Create a new person
+This API creates a new person entity.
+
+.request
+include::{snippets}/person-create/http-request.adoc[]
+
+.response
+include::{snippets}/person-create/http-response.adoc[]
+
+
+[#PersonGetAll]
+=== Get All
+Returns a list of existing person objects.
+See <<PersonCreate, Create>> to add a person entity to the existing records.
+
+.request
+include::{snippets}/person-getall/http-request.adoc[]
+
+.response
+include::{snippets}/person-getall/http-response.adoc[]
+
+TIP: The Get All API provides the original version at a different endpoint, it doesn't include an ID for each person.
+
+.request
+include::{snippets}/person-getall-orig/http-request.adoc[]
+
+.response
+include::{snippets}/person-getall-orig/http-response.adoc[]
+
+
+=== Get one
+Returns a single person identified by the ID provided in the path.
+
+.request
+include::{snippets}/person-getone/http-request.adoc[]
+
+.response
+include::{snippets}/person-getone/http-response.adoc[]
+
+[#PersonEdit]
+=== Update Person Entity
+Updates an existing person record. Returns a 404 if the person is not found.
+.request
+include::{snippets}/person-update/http-request.adoc[]
+
+.response
+include::{snippets}/person-update/http-response.adoc[]
+
+=== Delete Person
+Deletes an existing person entity. Returns a 404 if the person is not found.
+
+.request
+include::{snippets}/person-delete/http-request.adoc[]
+
+.response
+include::{snippets}/person-delete/http-response.adoc[]
+
+Note: Deleting a non-existing person returns a 404.
+
+.request
+include::{snippets}/person-delete-noone/http-request.adoc[]
+
+.response
+include::{snippets}/person-delete-noone/http-response.adoc[]
+
+
+[colophone]
+== Colophone
+
+{author} {email}
