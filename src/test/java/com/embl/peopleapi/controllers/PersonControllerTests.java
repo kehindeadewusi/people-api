@@ -4,7 +4,6 @@ import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-//import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -33,7 +32,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.payload.FieldDescriptor;
-//import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -92,7 +90,6 @@ public class PersonControllerTests{
     }
 
     @Test
-    //@WithMockUser(username = "test", password = "test", roles = "USER")
     public void canListPeople() throws Exception{
         //
         initIds();
@@ -122,7 +119,6 @@ public class PersonControllerTests{
     }
 
     @Test
-    // @WithMockUser(username = "test", password = "test", roles = "USER")
     public void canGetPersonDetails() throws Exception{
         person2.setId(2);
         when(service.getPerson(any(Integer.class))).thenReturn(Optional.of(person2));
@@ -135,7 +131,6 @@ public class PersonControllerTests{
     }
 
     @Test
-    // @WithMockUser(username = "test", password = "test", roles = "USER")
     public void canCreatePerson() throws Exception{
         person0.setId(5);
         when(service.addPerson(any(Person.class))).thenReturn(person0);
@@ -145,14 +140,15 @@ public class PersonControllerTests{
         
         this.mockMvc
             .perform(post("/persons/")//.with(csrf())
-                .contentType("application/json").content(request))
+                .contentType("application/json")
+                .header("Authorization", "Bearer yyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0wUkRNemd6UmtVeU9EQkRNa1EyUlROROFqVTFNRFV3UXpSQk1UTXdNekE0T0RFMFJUUXhRUSJ9.eyJpc3MiOiJodHRwczovL2tlaGluZGUuZXUuYXV0aDAuY29tLyIsInN1YiI6IlR3Rnp5cnd4VER4dkVRdU80VTlHTk5mQmo1aFBzamloQGNsaWVudHMiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJpYXQiOjE2MTMzMjYwMzUsImV4cCI6MTYxMzQxMjQzNSwiYXpwIjoiVHdGenlyd3hURHh2RVF1TzRVOUdOTmZCajVoUHNqaWgiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.CO_05Ewqj7RpCxBMzVcOaCtNQCVcPxAzzy2qPJQJ9i2WUYaYhZ5gqUwKk5-EWCzn8uZYKyv3PDahRT89jsG4bImgL_eulD1n6hj1sHj_szq8-ajOxpD5KxwcvwFG-LDngK-ja2eG04DoBY0YQ0g-5vOi4jSwRgT5ikIRXethuzHxG7InbskCA8vJ9qLvB8NKBqV3yqw8tMmg6c83LOCgmcpBAI1tHBrRK81LAto-hwlmjUJXl83lRGyCsdId9M306iMFp8LcKomAlpOqnVhP1tMAxxUxj-fZHcHh838_5obgE5kJrrpGkdt4n9sDEygeymNZzP9wK4MrFdUllmJr7B")
+                .content(request))
             .andDo(print())
             .andExpect(status().isCreated())
             .andDo(document("person-create"));
     }
 
     @Test
-    // @WithMockUser(username = "test", password = "test", roles = "USER")
     public void canEditPerson() throws Exception{
         person3.setFavouriteColour("RED");
         person3.setId(3);
@@ -161,31 +157,31 @@ public class PersonControllerTests{
         String request = "{\"age\" : 27, \"first_name\" : \"Bruno\", \"last_name\" : \"Fernandez\", \"favourite_colour\" : \"RED\"}";
 
         this.mockMvc
-            .perform(put("/persons/3/").contentType("application/json").content(request))
+            .perform(put("/persons/3/")
+                .contentType("application/json")
+                .header("Authorization", "Bearer yyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0wUkRNemd6UmtVeU9EQkRNa1EyUlROROFqVTFNRFV3UXpSQk1UTXdNekE0T0RFMFJUUXhRUSJ9.eyJpc3MiOiJodHRwczovL2tlaGluZGUuZXUuYXV0aDAuY29tLyIsInN1YiI6IlR3Rnp5cnd4VER4dkVRdU80VTlHTk5mQmo1aFBzamloQGNsaWVudHMiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJpYXQiOjE2MTMzMjYwMzUsImV4cCI6MTYxMzQxMjQzNSwiYXpwIjoiVHdGenlyd3hURHh2RVF1TzRVOUdOTmZCajVoUHNqaWgiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.CO_05Ewqj7RpCxBMzVcOaCtNQCVcPxAzzy2qPJQJ9i2WUYaYhZ5gqUwKk5-EWCzn8uZYKyv3PDahRT89jsG4bImgL_eulD1n6hj1sHj_szq8-ajOxpD5KxwcvwFG-LDngK-ja2eG04DoBY0YQ0g-5vOi4jSwRgT5ikIRXethuzHxG7InbskCA8vJ9qLvB8NKBqV3yqw8tMmg6c83LOCgmcpBAI1tHBrRK81LAto-hwlmjUJXl83lRGyCsdId9M306iMFp8LcKomAlpOqnVhP1tMAxxUxj-fZHcHh838_5obgE5kJrrpGkdt4n9sDEygeymNZzP9wK4MrFdUllmJr7B")
+                .content(request))
             .andDo(print())
             .andExpect(status().isOk())
             .andDo(document("person-update"));
     }
 
     @Test
-    // @WithMockUser(username = "test", password = "test", roles = "USER")
     public void canDeletePerson() throws Exception{
         Mockito.when(service.getPerson(2)).thenReturn(Optional.of(person2));
         Mockito.doNothing().when(service).deletePerson(any(Integer.class));
-        // Mockito.doAnswer(invocation -> {
-        //         Object arg0 = invocation.getArgument(0);
-        //     }
-        // ).when(service).deletePerson(any(Integer.class));
 
         this.mockMvc
-            .perform(delete("/persons/2"))
+            .perform(
+                delete("/persons/2")
+                .header("Authorization", "Bearer yyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik0wUkRNemd6UmtVeU9EQkRNa1EyUlROROFqVTFNRFV3UXpSQk1UTXdNekE0T0RFMFJUUXhRUSJ9.eyJpc3MiOiJodHRwczovL2tlaGluZGUuZXUuYXV0aDAuY29tLyIsInN1YiI6IlR3Rnp5cnd4VER4dkVRdU80VTlHTk5mQmo1aFBzamloQGNsaWVudHMiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjgwODAiLCJpYXQiOjE2MTMzMjYwMzUsImV4cCI6MTYxMzQxMjQzNSwiYXpwIjoiVHdGenlyd3hURHh2RVF1TzRVOUdOTmZCajVoUHNqaWgiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMifQ.CO_05Ewqj7RpCxBMzVcOaCtNQCVcPxAzzy2qPJQJ9i2WUYaYhZ5gqUwKk5-EWCzn8uZYKyv3PDahRT89jsG4bImgL_eulD1n6hj1sHj_szq8-ajOxpD5KxwcvwFG-LDngK-ja2eG04DoBY0YQ0g-5vOi4jSwRgT5ikIRXethuzHxG7InbskCA8vJ9qLvB8NKBqV3yqw8tMmg6c83LOCgmcpBAI1tHBrRK81LAto-hwlmjUJXl83lRGyCsdId9M306iMFp8LcKomAlpOqnVhP1tMAxxUxj-fZHcHh838_5obgE5kJrrpGkdt4n9sDEygeymNZzP9wK4MrFdUllmJr7B")
+                )
             .andDo(print())
             .andExpect(status().isOk())
             .andDo(document("person-delete"));
     }
 
     @Test
-    // @WithMockUser(username = "test", password = "test", roles = "USER")
     public void cannotDeleteNoneExitingPerson() throws Exception{
         Mockito.when(service.getPerson(5)).thenReturn(Optional.empty());
         Mockito.doNothing().when(service).deletePerson(any(Integer.class));

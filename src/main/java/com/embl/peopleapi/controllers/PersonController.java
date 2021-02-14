@@ -9,6 +9,7 @@ import com.embl.peopleapi.models.SimplePersonList;
 import com.embl.peopleapi.services.PersonService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +32,7 @@ public class PersonController {
         this.personService = personService;
     }
     
-    @GetMapping("/v0")
+    @RequestMapping(value = "/v0", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public String getPeople0() throws Exception {
         return personService.getPersons();
     }
